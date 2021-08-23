@@ -7,7 +7,7 @@ whose entire contents we wanted symbolic links for in our home directory.
 with that `<dir>` one folder above where the stow command was run.
 
 Example with the following file tree:
-`
+```
 ├── bash
 │   ├── .bashrc
 │   └── .profile
@@ -17,7 +17,7 @@ Example with the following file tree:
 │           └── somefile
 └── vim
     └── .vimrc
-`
+```
 
 Running `stow foo` inside the dotfiles folder will then create a
 symbolic link at `~/.config/foo/somefile`, creating any intermediate
