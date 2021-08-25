@@ -49,6 +49,8 @@ set incsearch " search as characters are entered
 set hlsearch
 nnoremap <leader><space> :nohlsearch<CR> " turn off search highlight with <SPACE>
 
+set scrolloff=10 " Keep 10 spaces from edge when scrolling up and down
+
 " Ale Lint settings
 let g:ale_fixers = {
       \   '*': ['remove_trailing_lines', 'trim_whitespace'],
