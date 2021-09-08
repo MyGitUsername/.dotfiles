@@ -11,8 +11,6 @@ call plug#begin('~/.vim/plugged')
 Plug 'sheerun/vim-polyglot' " Collection of language packs
 Plug 'dense-analysis/ale' " Lints code as you type
 Plug 'altercation/vim-colors-solarized'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
 "  Plug 'ervandew/supertab'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
