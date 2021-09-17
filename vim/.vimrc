@@ -1,4 +1,4 @@
-" Install plugin manager and plugins if plugin manager DNE
+" Automatic installation vim-plug if it isn't installed
 let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
 if empty(glob(data_dir . '/autoload/plug.vim'))
   silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
@@ -9,9 +9,8 @@ endif
 call plug#begin('~/.vim/plugged')
 
 Plug 'sheerun/vim-polyglot' " Collection of language packs
-Plug 'dense-analysis/ale' " Lints code as you type
 Plug 'altercation/vim-colors-solarized'
-"  Plug 'ervandew/supertab'
+" Plug 'ervandew/supertab'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
@@ -48,28 +47,3 @@ set hlsearch
 nnoremap <leader><space> :nohlsearch<CR> " turn off search highlight with <SPACE>
 
 set scrolloff=10 " Keep 10 spaces from edge when scrolling up and down
-
-" Ale Lint settings
-let g:ale_fixers = {
-      \   '*': ['remove_trailing_lines', 'trim_whitespace'],
-      \   'javascript': ['prettier'],
-      \   'css': ['prettier'],
-      \   'react': ['prettier'],
-      \   'vue': ['prettier'],
-      \}
-
-let g:ale_linters = {
-      \   'javascript': ['eslint'],
-      \   'css': ['eslint'],
-      \   'react': ['eslint'],
-      \   'vue': ['eslint'],
-      \}
-
-let g:ale_fix_on_save = 1
-let g:ale_linters_explicit = 1
-let g:ale_sign_error = '✘'
-let g:ale_sign_warning = '⚠'
-let g:ale_set_highlights = 0
-
-" Fuzzy File Finder with F2
-map <silent> <F2> :FZF<CR>
