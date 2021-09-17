@@ -2,6 +2,14 @@ set runtimepath^=~/.vim runtimepath+=~/.vim/after
 let &packpath = &runtimepath
 source ~/.vimrc
 
+let mapleader = ','
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fgr <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr> "list current buffer and search
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+nnoremap <leader>fgs <cmd>Telescope git_status<cr>
+nnoremap <leader>fgf <cmd>Telescope git_files<cr>
+
 lua << EOF
 
 -- Example init.lua
@@ -29,6 +37,10 @@ require('packer').startup(function()
   use 'wbthomason/packer.nvim' -- Package manager
   use 'neovim/nvim-lspconfig' -- Collection of configurations for built-in LSP client
   use 'hrsh7th/nvim-compe' -- Autocompletion plugin
+  use {
+    'nvim-treesitter/nvim-treesitter',
+    run = ':TSUpdate'
+  }
   use {
     'nvim-telescope/telescope.nvim',
     requires = { {'nvim-lua/plenary.nvim'} }
@@ -61,7 +73,7 @@ local on_attach = function(client, bufnr)
 
 end
 
-local servers = { "denols" }
+local servers = { "tsserver" }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
