@@ -12,7 +12,8 @@ export EDITOR=vim                 # Set default editor
 
 # Load external config files and tools
 source $HOME/.aliases
-source $HOME/.functions.zsh
+source $HOME/.functions
+source $HOME/.git-fzf
 source /opt/homebrew/opt/powerlevel10k/powerlevel10k.zsh-theme
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 source /opt/homebrew/etc/profile.d/z.sh

@@ -56,11 +56,6 @@
     fi
   }
 
-  # TODO: tweak to use relative path
-  fgd() {
-    git diff $(git diff --name-only | fzf)
-  }
-
 # Docker
   # docker
   dpsf() {

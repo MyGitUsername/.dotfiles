@@ -1,0 +1,36 @@
+# Git
+alias gfuz='git ls-files -m -o --exclude-standard | fzf --print0 -m -1 | xargs -0 -t -o'
+
+alias gdf='gfuz git diff'
+
+gco(){
+  if [ $# -eq 0 ]; then
+    gfuz git checkout
+  else
+    git checkout "$@"
+  fi
+}
+
+ga(){
+  if [ $# -eq 0 ]; then
+    gfuz git add
+  else
+    git add "$@"
+  fi
+}
+
+grh(){
+  if [ $# -eq 0 ]; then
+    git diff --name-only --cached | fzf --print0 -m -1 | xargs -0 -t -o git reset HEAD
+  else
+    git reset HEAD "$@"
+  fi
+}
+
+gb(){
+  if [ $# -eq 0 ]; then
+    git branch | fzf --print0 -m | tr -d '[:space:]*' |xargs -0 -t -o git checkout
+  else
+    git checkout "$@"
+  fi
+}
