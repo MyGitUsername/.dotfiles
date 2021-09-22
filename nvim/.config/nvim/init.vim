@@ -6,7 +6,7 @@ source ~/.vimrc
 let mapleader = ','
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fgr <cmd>Telescope live_grep<cr>
-nnoremap <leader>fb <cmd>Telescope buffers<cr> " list current buffer and search
+nnoremap <leader>fb <cmd>Telescope buffers<cr> 
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 nnoremap <leader>fgs <cmd>Telescope git_status<cr>
 nnoremap <leader>fgf <cmd>Telescope git_files<cr>

@@ -1,8 +1,14 @@
-# Git
+# Git Functions
+# Source: https://www.techspeak.dev/2019/01/14/improve-your-git-flow-with-fuzzy-find.html
 alias gfuz='git ls-files -m -o --exclude-standard | fzf --print0 -m -1 | xargs -0 -t -o'
 
+# diff
 alias gdf='gfuz git diff'
 
+# diff --cached
+alias gdfc='gfuz git diff --cached'
+
+# checkout
 gco(){
   if [ $# -eq 0 ]; then
     gfuz git checkout
@@ -11,6 +17,7 @@ gco(){
   fi
 }
 
+# add
 ga(){
   if [ $# -eq 0 ]; then
     gfuz git add
@@ -19,6 +26,7 @@ ga(){
   fi
 }
 
+# unstage files
 grh(){
   if [ $# -eq 0 ]; then
     git diff --name-only --cached | fzf --print0 -m -1 | xargs -0 -t -o git reset HEAD
@@ -27,9 +35,10 @@ grh(){
   fi
 }
 
+# navigate branches
 gb(){
   if [ $# -eq 0 ]; then
-    git branch | fzf --print0 -m | tr -d '[:space:]*' |xargs -0 -t -o git checkout
+    git branch | fzf --print0 -m | tr -d '[:space:]*' | xargs -0 -t -o git checkout
   else
     git checkout "$@"
   fi
