@@ -46,7 +46,20 @@ require('packer').startup(function()
     'nvim-telescope/telescope.nvim',
     requires = { {'nvim-lua/plenary.nvim'} }
   }
+  use {
+    'glacambre/firenvim',
+    run = function() vim.fn['firenvim#install'](0) end 
+  }
+  use {
+    'hoob3rt/lualine.nvim',
+    requires = {'kyazdani42/nvim-web-devicons', opt = true}
+  }
 end)
+
+-- Lua Line Config
+require'lualine'.setup{
+  options = { theme  = 'solarized_dark' },
+}
 
 local nvim_lsp = require('lspconfig')
 
