@@ -8,6 +8,7 @@ fi
 
 # Set important shell env variables
 export EDITOR=vim                 # Set default editor
+export BAT_THEME="Solarized (dark)"
 
 
 # Load external config files and tools
