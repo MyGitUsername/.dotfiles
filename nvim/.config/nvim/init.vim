@@ -11,6 +11,9 @@ nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 nnoremap <leader>fgs <cmd>Telescope git_status<cr>
 nnoremap <leader>fgf <cmd>Telescope git_files<cr>
 
+" Git Gutter
+highlight clear SignColumn
+
 lua << EOF
 
 -- Example init.lua
@@ -46,20 +49,9 @@ require('packer').startup(function()
     'nvim-telescope/telescope.nvim',
     requires = { {'nvim-lua/plenary.nvim'} }
   }
-  use {
-    'glacambre/firenvim',
-    run = function() vim.fn['firenvim#install'](0) end 
-  }
-  use {
-    'hoob3rt/lualine.nvim',
-    requires = {'kyazdani42/nvim-web-devicons', opt = true}
-  }
+  use { 'kyazdani42/nvim-web-devicons' } -- Icons for telescope
+  use { 'airblade/vim-gitgutter' }
 end)
-
--- Lua Line Config
-require'lualine'.setup{
-  options = { theme  = 'solarized_dark' },
-}
 
 local nvim_lsp = require('lspconfig')
 
