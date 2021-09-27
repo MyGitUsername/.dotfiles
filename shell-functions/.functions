@@ -57,7 +57,6 @@
   }
 
 # Docker
-  # docker
   dpsf() {
     docker ps --format "table {{.Names}}\t{{.Status}}\t{{.State}}"
   }
