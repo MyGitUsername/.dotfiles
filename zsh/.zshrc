@@ -23,7 +23,7 @@ eval "$(pyenv init -)" # Pyenv
 
 
 # Path
-export PATH=$PATH:/Users/mkmac/.gem/ruby/2.7.0/bin
+export PATH=~/.local/share/nvim/lsp_servers:~/.npm-global/bin:/Users/mkmac/.gem/ruby/2.7.0/bin:$PATH
 
 
 # Misc

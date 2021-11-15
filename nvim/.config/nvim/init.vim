@@ -40,6 +40,7 @@ local use = require('packer').use
 require('packer').startup(function()
   use 'wbthomason/packer.nvim' -- Package manager
   use 'neovim/nvim-lspconfig' -- Collection of configurations for built-in LSP client
+  use 'williamboman/nvim-lsp-installer' -- Install LSP servers locally with :LspInstall
   use 'hrsh7th/nvim-compe' -- Autocompletion plugin
   use {
     'nvim-treesitter/nvim-treesitter',
@@ -51,6 +52,7 @@ require('packer').startup(function()
   }
   use { 'kyazdani42/nvim-web-devicons' } -- Icons for telescope
   use { 'airblade/vim-gitgutter' }
+  use { 'github/copilot.vim' }
 end)
 
 local nvim_lsp = require('lspconfig')
@@ -79,7 +81,9 @@ local on_attach = function(client, bufnr)
 
 end
 
-local servers = { "tsserver" }
+-- Typescript: tsserver
+-- Ruby: solargraph
+local servers = { "tsserver", "solargraph" }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,

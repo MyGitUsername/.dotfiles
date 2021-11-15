@@ -34,7 +34,7 @@ nmap <leader>8 <Plug>AirlineSelectTab8
 nmap <leader>9 <Plug>AirlineSelectTab9
 nmap <leader>0 <Plug>AirlineSelectTab0
 
-set background=dark
+"set background=dark
 syntax enable
 colorscheme solarized
 
@@ -63,4 +63,4 @@ set incsearch " search as characters are entered
 set hlsearch
 nnoremap <leader><space> :nohlsearch<CR> " turn off search highlight with <SPACE>
 
-set scrolloff=8 " Keep 10 spaces from edge when scrolling up and down
+set scrolloff=8
