@@ -1,0 +1,23 @@
+# git
+alias gs='git status'
+alias gd='git diff'
+alias gdc='git diff --cached'
+alias gc='git commit'
+
+# fzf
+alias vop='vim -o `fzf`'
+alias nop='nvim -o `fzf`'
+
+# vim
+alias vim='nvim'
+alias e='nvim'
+
+# rg
+alias rg='rg -M 256'
+
+# ls
+alias ll='ls -alF'
+alias la='ls -aF'
+
+# cat
+alias cat='bat'
