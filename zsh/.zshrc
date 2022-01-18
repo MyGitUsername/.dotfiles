@@ -6,24 +6,13 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 
-# Set important shell env variables
-export EDITOR=vim                 # Set default editor
-export BAT_THEME="Solarized (dark)"
-
-
 # Load external config files and tools
 source $HOME/.aliases
 source $HOME/.functions
 source $HOME/.git-fzf
-source /opt/homebrew/opt/powerlevel10k/powerlevel10k.zsh-theme
+source ~/powerlevel10k/powerlevel10k.zsh-theme
+source /usr/local/bin/z.sh
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-source /opt/homebrew/etc/profile.d/z.sh
-eval "$(rbenv init -)" # Rbenv
-eval "$(pyenv init -)" # Pyenv
-
-
-# Path
-export PATH=~/.local/share/nvim/lsp_servers:~/.npm-global/bin:/Users/mkmac/.gem/ruby/2.7.0/bin:$PATH
 
 
 # Misc
@@ -39,7 +28,7 @@ SAVEHIST=100000                  # The max number of commands that are stored in
 HISTFILE=~/.zsh_history
 setopt HIST_FIND_NO_DUPS         # Stepping through your history will not show duplicates.
 setopt INC_APPEND_HISTORY        # Write to the history file immediately, not when the shell exits.
-setopt SHARE_HISTORY             # Share history between all sessions.
+# setopt SHARE_HISTORY             # Share history between all sessions.
 setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry.
 setopt HIST_VERIFY               # Don't execute immediately upon history expansion.
 
