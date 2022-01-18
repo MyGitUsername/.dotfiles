@@ -1,3 +1,6 @@
+# safe bash
+mkdir='mkdir -p'
+
 # git
 alias gs='git status'
 alias gd='git diff'
@@ -21,3 +24,11 @@ alias la='ls -aF'
 
 # cat
 alias cat='bat'
+
+alias open='xdg-open'
+
+alias fd='fdfind'
+
+alias cs="cht.sh"
+
+alias susp="xfce4-session-logout -s"
