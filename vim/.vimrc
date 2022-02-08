@@ -34,7 +34,7 @@ nmap <leader>8 <Plug>AirlineSelectTab8
 nmap <leader>9 <Plug>AirlineSelectTab9
 nmap <leader>0 <Plug>AirlineSelectTab0
 
-"set background=dark
+set background=dark
 syntax enable
 colorscheme solarized
 
