@@ -41,7 +41,7 @@ require('packer').startup(function()
   use 'wbthomason/packer.nvim' -- Package manager
   use 'neovim/nvim-lspconfig' -- Collection of configurations for built-in LSP client
   use 'williamboman/nvim-lsp-installer' -- Install LSP servers locally with :LspInstall
-  use 'hrsh7th/nvim-compe' -- Autocompletion plugin
+  use 'hrsh7th/nvim-comp' -- Autocompletion plugin
   use {
     'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate'
