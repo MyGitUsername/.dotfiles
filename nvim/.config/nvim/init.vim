@@ -82,8 +82,8 @@ local on_attach = function(client, bufnr)
 end
 
 -- Typescript: tsserver
--- Ruby: solargraph
-local servers = { "tsserver", "solargraph" }
+-- Ruby: solargraph, sorbet
+local servers = { "tsserver", "sorbet", "pyright", "elixirls" }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
@@ -92,6 +92,35 @@ for _, lsp in ipairs(servers) do
     }
   }
 end
+
+require'lspconfig'.tsserver.setup {
+    cmd = { "/home/michael/.local/share/nvim/lsp_servers/tsserver/node_modules/.bin/typescript-language-server" };
+}
+-- https://www.mitchellhanberg.com/how-to-set-up-neovim-for-elixir-development/
+require'lspconfig'.elixirls.setup {
+  cmd = { "/home/michael/.local/share/nvim/lsp_servers/elixir/elixir-ls/language_server.sh" },
+  -- capabilities = capabilities,
+  on_attach = on_attach,
+  settings = {
+    elixirLS = {
+      -- I choose to disable dialyzer for personal reasons, but
+      -- I would suggest you also disable it unless you are well
+      -- aquainted with dialzyer and know how to use it.
+      dialyzerEnabled = false,
+      -- I also choose to turn off the auto dep fetching feature.
+      -- It often get's into a weird state that requires deleting
+      -- the .elixir_ls directory and restarting your editor.
+      fetchDeps = false
+    }
+  }
+}
+require'lspconfig'.sorbet.setup {
+    cmd = { "/home/michael/.local/share/nvim/lsp_servers/sorbet/bin/srb", "--lsp" };
+}
+require'lspconfig'.pyright.setup {
+    cmd = { "/home/michael/.local/share/nvim/lsp_servers/python/node_modules/.bin/pyright-langserver",  "--stdio"};
+}
+
 
 -- nvim-compe setup
 require'compe'.setup {
@@ -172,7 +201,7 @@ vim.api.nvim_exec(
 
 -- Treesitter configuration
 require('nvim-treesitter.configs').setup {
-  ensure_installed = { "lua", "javascript", "typescript", "bash" }, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  ensure_installed = { "lua", "javascript", "typescript", "bash", "elixir" }, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
   highlight = {
     enable = true, -- false will disable the whole extension
   },
