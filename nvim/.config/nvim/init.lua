@@ -1,21 +1,3 @@
-set runtimepath^=~/.vim runtimepath+=~/.vim/after
-let &packpath = &runtimepath
-source ~/.vimrc
-
-" Telescope
-let mapleader = ','
-nnoremap <leader>ff <cmd>Telescope find_files<cr>
-nnoremap <leader>fgr <cmd>Telescope live_grep<cr>
-nnoremap <leader>fb <cmd>Telescope buffers<cr> 
-nnoremap <leader>fh <cmd>Telescope help_tags<cr>
-nnoremap <leader>fgs <cmd>Telescope git_status<cr>
-nnoremap <leader>fgf <cmd>Telescope git_files<cr>
-
-" Git Gutter
-highlight clear SignColumn
-
-lua << EOF
-
 -- Example init.lua
 -- https://github.com/mjlbach/defaults.nvim/blob/master/init.lua
 
@@ -41,6 +23,13 @@ require('packer').startup(function()
   use 'wbthomason/packer.nvim' -- Package manager
   use 'neovim/nvim-lspconfig' -- Collection of configurations for built-in LSP client
   use 'williamboman/nvim-lsp-installer' -- Install LSP servers locally with :LspInstall
+  use 'altercation/vim-colors-solarized' -- Solarized colorscheme
+  use 'sheerun/vim-polyglot' -- Collection of language packs
+  use 'tpope/vim-commentary'
+  use 'tpope/vim-surround'
+  use 'tpope/vim-fugitive'
+  use 'vim-airline/vim-airline'
+  use 'vim-airline/vim-airline-themes'
   use 'hrsh7th/nvim-cmp' -- Autocompletion plugin
   use 'hrsh7th/cmp-nvim-lsp' -- LSP source for nvim-cmp
   use 'saadparwaiz1/cmp_luasnip' -- Snippets source for nvim-cmp
@@ -57,6 +46,68 @@ require('packer').startup(function()
   use { 'airblade/vim-gitgutter' }
   use { 'github/copilot.vim' }
 end)
+
+-- Refactor to lua
+vim.cmd [[
+  " Airline
+  let g:airline#extensions#tabline#enabled = 1
+  let g:airline#extensions#tabline#buffer_idx_mode = 1
+  let mapleader = ','
+  nmap <leader>1 <Plug>AirlineSelectTab1
+  nmap <leader>2 <Plug>AirlineSelectTab2
+  nmap <leader>3 <Plug>AirlineSelectTab3
+  nmap <leader>4 <Plug>AirlineSelectTab4
+  nmap <leader>5 <Plug>AirlineSelectTab5
+  nmap <leader>6 <Plug>AirlineSelectTab6
+  nmap <leader>7 <Plug>AirlineSelectTab7
+  nmap <leader>8 <Plug>AirlineSelectTab8
+  nmap <leader>9 <Plug>AirlineSelectTab9
+  nmap <leader>0 <Plug>AirlineSelectTab0
+
+  " Telescope
+  let mapleader = ','
+  nnoremap <leader>ff <cmd>Telescope find_files<cr>
+  nnoremap <leader>fgr <cmd>Telescope live_grep<cr>
+  nnoremap <leader>fb <cmd>Telescope buffers<cr> 
+  nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+  nnoremap <leader>fgs <cmd>Telescope git_status<cr>
+  nnoremap <leader>fgf <cmd>Telescope git_files<cr>
+
+  " Git Gutter
+  highlight clear SignColumn
+
+  " Colorscheme
+  set background=dark
+  syntax enable
+  colorscheme solarized
+
+  " Spaces and Tabs
+  set shiftwidth=2
+  set softtabstop=2     " the number of spaces <TAB> character counts for when editing a file
+  set expandtab        " tabs are spaces (e.g., <TAB> is a shortcut for add four spaces)
+
+  " Turn hybrid line numbers on
+  set number relativenumber
+
+  " filetype indent on      " turns on language detection and allows loading of language specific indentation
+  " (e.g., loads python indentation that lives in ~/.vim/indent/python.vim)
+  filetype plugin on      " loads typescript config that lives in ~/.vim/after/ftplugin/ts.vim
+  " set wildmenu         " provides graphical menu for when autocompletion is triggered
+  set lazyredraw        " redraw the screen only when required
+  set showmatch         " highlights matching parenthesis-like character when cursor is hovered over one
+
+  set nowrap
+  " jj key is <Esc> setting
+  inoremap jj <Esc>
+  inoremap ;; <Esc>
+
+  " Searching
+  set incsearch " search as characters are entered
+  set hlsearch
+  nnoremap <leader><space> :nohlsearch<CR> " turn off search highlight with <SPACE>
+
+  set scrolloff=8
+]]
 
 local nvim_lsp = require('lspconfig')
 
@@ -94,6 +145,8 @@ end
 
 -- Typescript: tsserver
 -- Ruby: solargraph, sorbet
+
+--[[
 local servers = { "tsserver", "sorbet", "pyright", "elixirls" }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
@@ -131,6 +184,7 @@ require'lspconfig'.sorbet.setup {
 require'lspconfig'.pyright.setup {
     cmd = { "/home/michael/.local/share/nvim/lsp_servers/python/node_modules/.bin/pyright-langserver",  "--stdio"};
 }
+--]]
 
 
 -- luasnip setup
@@ -243,4 +297,3 @@ require('nvim-treesitter.configs').setup {
     },
   },
 }
-EOF
