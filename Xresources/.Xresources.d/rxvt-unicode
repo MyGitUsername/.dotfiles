@@ -1,0 +1,19 @@
+! declare font and size
+URxvt.font: xft:MesloLGS NF:size=16
+
+! For solarized theme: https://bbs.archlinux.org/viewtopic.php?id=164108
+URxvt.intensityStyles: false
+
+! reduce font spacing
+! URxvt.letterSpace: -1
+
+! do not scroll with output
+URxvt*scrollTtyOutput: false
+
+! scroll in relation to buffer (with mouse scroll or Shift+Page Up)
+URxvt*scrollWithBuffer: true
+
+URxvt.scrollBar: false
+
+! extensions
+URxvt.perl-ext-common: font-size
