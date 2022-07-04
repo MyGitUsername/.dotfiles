@@ -10,8 +10,10 @@ fi
 source $HOME/.aliases
 source $HOME/.functions
 source $HOME/.git-fzf
+[ -f /usr/local/bin/z.sh ] && source /usr/local/bin/z.sh
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 source ~/powerlevel10k/powerlevel10k.zsh-theme
-source /usr/local/bin/z.sh
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 
 

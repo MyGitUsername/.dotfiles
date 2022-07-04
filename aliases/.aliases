@@ -7,14 +7,6 @@ alias gd='git diff'
 alias gdc='git diff --cached'
 alias gc='git commit'
 
-# fzf
-alias vop='vim -o `fzf`'
-alias nop='nvim -o `fzf`'
-
-# vim
-alias vim='nvim'
-alias e='nvim'
-
 # rg
 alias rg='rg -M 256'
 
@@ -22,13 +14,12 @@ alias rg='rg -M 256'
 alias ll='ls -alF'
 alias la='ls -aF'
 
-# cat
-alias cat='bat'
-
 alias open='xdg-open'
 
 alias fd='fdfind'
 
 alias cs="cht.sh"
 
-alias susp="xfce4-session-logout -s"
+alias poweroff="sudo systemctl poweroff"
+alias reboot="sudo systemctl reboot"
+alias suspend="sudo systemctl suspend"
