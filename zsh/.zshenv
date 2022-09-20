@@ -15,5 +15,6 @@ eval "$(rbenv init -)"
 
 # Set important shell env variables
 export EDITOR=vim                 # Set default editor
+export TERM="rxvt-unicode-256color"
 export BAT_THEME="Solarized (dark)"
 
