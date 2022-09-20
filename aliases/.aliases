@@ -16,8 +16,6 @@ alias la='ls -aF'
 
 alias open='xdg-open'
 
-alias fd='fdfind'
-
 alias cs="cht.sh"
 
 alias poweroff="sudo systemctl poweroff"
