@@ -11,7 +11,8 @@ fpath=(
   ~/.zsh.d/ 
   $fpath
 )
-eval "$(rbenv init -)"
+
+path=(~/.rbenv/bin $path)
 
 # Set important shell env variables
 export EDITOR=vim                 # Set default editor
