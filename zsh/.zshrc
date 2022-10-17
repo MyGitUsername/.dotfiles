@@ -22,6 +22,7 @@ setopt vi                         # Enable vi-mode
 bindkey -M viins 'jj' vi-cmd-mode # Enter vi mode with jj
 setopt NO_BEEP                    # Disable beeps
 setopt AUTO_CD                    # Sends cd commands without the need for 'cd'
+setopt INTERACTIVECOMMENTS        # Allows bash style comments in command line
 
 
 # ZSH History
