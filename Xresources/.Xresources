@@ -1,3 +1,2 @@
-/* #include ".Xresources.d/theme" */
-#include ".Xresources.d/selenized-dark"
+#include ".Xresources.d/solarized-dark"
 #include ".Xresources.d/rxvt-unicode"
