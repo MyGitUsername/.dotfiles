@@ -14,10 +14,16 @@ alias rg='rg -M 256'
 alias ll='ls -alF'
 alias la='ls -aF'
 
+alias swpcaps='setxkbmap -option caps:swapescape'
+
 alias open='xdg-open'
 
 alias cs="cht.sh"
 
-alias poweroff="sudo systemctl poweroff"
-alias reboot="sudo systemctl reboot"
-alias suspend="sudo systemctl suspend"
+alias poweroff="systemctl poweroff"
+alias reboot="systemctl reboot"
+alias susp="i3lock -c 000000 ; systemctl suspend"
+
+alias cc="claude"
+
+alias xr="xrandr --auto"
