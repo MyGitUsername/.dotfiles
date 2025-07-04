@@ -10,7 +10,6 @@ fi
 source $HOME/.aliases
 source $HOME/.functions
 source $HOME/.git-fzf
-[ -f /usr/local/bin/z.sh ] && source /usr/local/bin/z.sh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 source ~/powerlevel10k/powerlevel10k.zsh-theme
@@ -62,6 +61,8 @@ zstyle ':completion:*' verbose true
 
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
+
+eval "$(zoxide init zsh)"
 
 eval "$(~/.rbenv/bin/rbenv init - zsh)"
 
