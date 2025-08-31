@@ -1,17 +1,44 @@
-
 -- Lazy.nvim plugin manager
 -- see ~/.config/nvim/lua/plugins.lua
 -- see ~/.config/nvim/lua/config/lazy.lua
 require("config.lazy")
 
-vim.g.mapleader = ','  -- Set leader key early
+------------------------------
+--General Nvim Customization--
+------------------------------
+-- Spaces and Tabs
+vim.opt.shiftwidth = 2
+vim.opt.softtabstop = 2     -- the number of spaces <TAB> character counts for when editing a file
+vim.opt.expandtab = true    -- tabs are spaces (e.g., <TAB> is a shortcut for add four spaces)
+
+vim.opt.relativenumber = true
+
+vim.opt.lazyredraw = true         -- redraw the screen only when required
+vim.opt.showmatch = true          -- highlights matching parenthesis-like character when cursor is hovered over one
+vim.opt.wrap = false
+
+vim.keymap.set('i', 'jj', '<Esc>', { desc = 'Exit insert mode with jj' })
+vim.keymap.set('i', ';;', '<Esc>', { desc = 'Exit insert mode with ;;' })
+
+vim.opt.incsearch = true          -- search as characters are entered
+vim.opt.hlsearch = true
+
+-- turn off search highlight with <leader><space>
+vim.keymap.set('n', '<leader><space>', ':nohlsearch<CR>', { desc = 'Clear search highlight' })
+
+vim.opt.scrolloff = 8
+
+-- Set leader key early
+vim.g.mapleader = ','  
 
 -- Colorscheme Config 
 vim.cmd[[colorscheme tokyonight-moon]]
 
+-- Git Gutter
+vim.cmd('highlight clear SignColumn')
+
 -- Lualine Config
 vim.opt.cmdheight = 0 -- Hide neovim command line area when not in use
---
 require('lualine').setup {
   options = {
     theme = 'auto',
@@ -38,39 +65,6 @@ vim.keymap.set("n", "<leader>fb", "<cmd>FzfLua buffers<cr>")
 vim.keymap.set("n", "<leader>fh", "<cmd>FzfLua help_tags<cr>")
 vim.keymap.set("n", "<leader>fgs", "<cmd>FzfLua git_status<cr>")
 vim.keymap.set("n", "<leader>fgf", "<cmd>FzfLua git_files<cr>")
-
--- TODO: Refactor to lua
-vim.cmd [[
-  " Git Gutter
-  highlight clear SignColumn
-
-  " Spaces and Tabs
-  set shiftwidth=2
-  set softtabstop=2     " the number of spaces <TAB> character counts for when editing a file
-  set expandtab        " tabs are spaces (e.g., <TAB> is a shortcut for add four spaces)
-
-  " Turn hybrid line numbers on
-  set number relativenumber
-
-  " filetype indent on      " turns on language detection and allows loading of language specific indentation
-  " (e.g., loads python indentation that lives in ~/.vim/indent/python.vim)
-  filetype plugin on      " loads typescript config that lives in ~/.vim/after/ftplugin/ts.vim
-  " set wildmenu         " provides graphical menu for when autocompletion is triggered
-  set lazyredraw        " redraw the screen only when required
-  set showmatch         " highlights matching parenthesis-like character when cursor is hovered over one
-
-  set nowrap
-  " jj key is <Esc> setting
-  inoremap jj <Esc>
-  inoremap ;; <Esc>
-
-  " Searching
-  set incsearch " search as characters are entered
-  set hlsearch
-  nnoremap <leader><space> :nohlsearch<CR> " turn off search highlight with <SPACE>
-
-  set scrolloff=8
-]]
 
 require("mason").setup()
 require("mason-lspconfig").setup()

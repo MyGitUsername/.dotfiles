@@ -7,7 +7,6 @@ return {
     'nvim-lualine/lualine.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons', lazy = true }
   },
-  'sheerun/vim-polyglot',
   'tpope/vim-commentary',
   'tpope/vim-surround',
   'tpope/vim-fugitive',
