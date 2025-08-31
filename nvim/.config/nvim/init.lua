@@ -1,81 +1,48 @@
--- Example init.lua
--- https://github.com/mjlbach/defaults.nvim/blob/master/init.lua
 
--- Install packer
-local install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
+-- Lazy.nvim plugin manager
+-- see ~/.config/nvim/lua/plugins.lua
+-- see ~/.config/nvim/lua/config/lazy.lua
+require("config.lazy")
 
-if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-  vim.fn.execute('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
+vim.g.mapleader = ','  -- Set leader key early
+
+-- Colorscheme Config 
+vim.cmd[[colorscheme tokyonight-moon]]
+
+-- Lualine Config
+vim.opt.cmdheight = 0 -- Hide neovim command line area when not in use
+--
+require('lualine').setup {
+  options = {
+    theme = 'auto',
+  },
+  tabline = {
+    lualine_a = {
+      {
+        'buffers',
+        mode = 2, -- Shows buffer name + index number
+      }
+    },
+    lualine_z = {'tabs'}
+  }
+}
+
+for i = 1, 9 do
+  vim.keymap.set('n', '<leader>' .. i, '<Cmd>LualineBuffersJump ' .. i .. '<CR>')
 end
 
-vim.api.nvim_exec(
-  [[
-  augroup Packer
-    autocmd!
-    autocmd BufWritePost init.lua PackerCompile
-  augroup end
-]],
-  false
-)
+-- FZF-Lua
+vim.keymap.set("n", "<leader>ff", "<cmd>FzfLua files<cr>")
+vim.keymap.set("n", "<leader>fgr", "<cmd>FzfLua live_grep<cr>")
+vim.keymap.set("n", "<leader>fb", "<cmd>FzfLua buffers<cr>")
+vim.keymap.set("n", "<leader>fh", "<cmd>FzfLua help_tags<cr>")
+vim.keymap.set("n", "<leader>fgs", "<cmd>FzfLua git_status<cr>")
+vim.keymap.set("n", "<leader>fgf", "<cmd>FzfLua git_files<cr>")
 
-local use = require('packer').use
-require('packer').startup(function()
-  use 'wbthomason/packer.nvim' -- Package manager
-  use 'neovim/nvim-lspconfig' -- Collection of configurations for built-in LSP client
-  use 'williamboman/nvim-lsp-installer' -- Install LSP servers locally with :LspInstall
-  use 'altercation/vim-colors-solarized' -- Solarized colorscheme
-  use 'sheerun/vim-polyglot' -- Collection of language packs
-  use 'tpope/vim-commentary'
-  use 'tpope/vim-surround'
-  use 'tpope/vim-fugitive'
-  use 'vim-airline/vim-airline'
-  use 'vim-airline/vim-airline-themes'
-  use 'hrsh7th/nvim-cmp' -- Autocompletion plugin
-  use 'hrsh7th/cmp-nvim-lsp' -- LSP source for nvim-cmp
-  use 'saadparwaiz1/cmp_luasnip' -- Snippets source for nvim-cmp
-  use 'L3MON4D3/LuaSnip' -- Snippets plugin
-  use {
-    'nvim-telescope/telescope.nvim',
-    requires = { {'nvim-lua/plenary.nvim'} }
-  }
-  use { 'kyazdani42/nvim-web-devicons' } -- Icons for telescope
-  use { 'airblade/vim-gitgutter' }
-  use { 'github/copilot.vim' }
-end)
-
--- Refactor to lua
+-- TODO: Refactor to lua
 vim.cmd [[
-  " Airline
-  let g:airline#extensions#tabline#enabled = 1
-  let g:airline#extensions#tabline#buffer_idx_mode = 1
-  let mapleader = ','
-  nmap <leader>1 <Plug>AirlineSelectTab1
-  nmap <leader>2 <Plug>AirlineSelectTab2
-  nmap <leader>3 <Plug>AirlineSelectTab3
-  nmap <leader>4 <Plug>AirlineSelectTab4
-  nmap <leader>5 <Plug>AirlineSelectTab5
-  nmap <leader>6 <Plug>AirlineSelectTab6
-  nmap <leader>7 <Plug>AirlineSelectTab7
-  nmap <leader>8 <Plug>AirlineSelectTab8
-  nmap <leader>9 <Plug>AirlineSelectTab9
-  nmap <leader>0 <Plug>AirlineSelectTab0
-
-  " Telescope
-  let mapleader = ','
-  nnoremap <leader>ff <cmd>Telescope find_files<cr>
-  nnoremap <leader>fgr <cmd>Telescope live_grep<cr>
-  nnoremap <leader>fb <cmd>Telescope buffers<cr> 
-  nnoremap <leader>fh <cmd>Telescope help_tags<cr>
-  nnoremap <leader>fgs <cmd>Telescope git_status<cr>
-  nnoremap <leader>fgf <cmd>Telescope git_files<cr>
-
   " Git Gutter
   highlight clear SignColumn
-
-  " Colorscheme
-  set background=dark
-  syntax enable
-  colorscheme solarized
 
   " Spaces and Tabs
   set shiftwidth=2
@@ -105,11 +72,11 @@ vim.cmd [[
   set scrolloff=8
 ]]
 
+require("mason").setup()
+require("mason-lspconfig").setup()
 local nvim_lsp = require('lspconfig')
 
--- Add additional capabilities supported by nvim-cmp
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- Mappings.
 local opts = { noremap=true, silent=true }
@@ -136,21 +103,16 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
   buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
   buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-  buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-  buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-  buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+  vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
+  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+  vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
 
 end
 
 -- Typescript: tsserver
 -- Ruby: solargraph, sorbet
 
---[[
-local servers = { "tsserver", "sorbet", "pyright", "elixirls" }
+local servers = { "solargraph", "elixirls" }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
@@ -160,13 +122,24 @@ for _, lsp in ipairs(servers) do
   }
 end
 
-require'lspconfig'.tsserver.setup {
-    cmd = { "/home/michael/.local/share/nvim/lsp_servers/tsserver/node_modules/.bin/typescript-language-server" };
+nvim_lsp.solargraph.setup {
+  cmd = {"solargraph", "stdio"},
+  filetypes = { "ruby" },
+  init_options = {
+    formatting = true
+  },
+  root_dir = require("lspconfig.util").root_pattern("Gemfile", ".git"),
+  settings = {
+    solargraph = {
+      diagnostics = true
+    }
+  }
 }
 -- https://www.mitchellhanberg.com/how-to-set-up-neovim-for-elixir-development/
-require'lspconfig'.elixirls.setup {
-  cmd = { "/home/michael/.local/share/nvim/lsp_servers/elixir/elixir-ls/language_server.sh" },
-  -- capabilities = capabilities,
+ -- /home/michael/.local/share/nvim/lsp_servers/elixir/elixir-ls/language_server.sh" },
+nvim_lsp.elixirls.setup {
+  cmd = { "/home/michael/.local/share/nvim/mason/bin/elixir-ls" },
+  capabilities = capabilities,
   on_attach = on_attach,
   settings = {
     elixirLS = {
@@ -181,10 +154,14 @@ require'lspconfig'.elixirls.setup {
     }
   }
 }
-require'lspconfig'.sorbet.setup {
+--[[
+nvim_lsp.tsserver.setup {
+    cmd = { "/home/michael/.local/share/nvim/lsp_servers/tsserver/node_modules/.bin/typescript-language-server" };
+}
+nvim_lsp.sorbet.setup {
     cmd = { "/home/michael/.local/share/nvim/lsp_servers/sorbet/bin/srb", "--lsp" };
 }
-require'lspconfig'.pyright.setup {
+nvim_lsp.pyright.setup {
     cmd = { "/home/michael/.local/share/nvim/lsp_servers/python/node_modules/.bin/pyright-langserver",  "--stdio"};
 }
 --]]
@@ -242,8 +219,18 @@ vim.api.nvim_exec(
   [[
   augroup YankHighlight
     autocmd!
-    autocmd TextYankPost * silent! lua vim.highlight.on_yank()
+    autocmd TextYankPost * silent! lua vim.hl.on_yank()
   augroup end
 ]],
   false
 )
+
+require'nvim-treesitter.configs'.setup {
+  -- A list of parser names, or "all"
+  ensure_installed = { "elixir", "heex", "lua" },
+
+  highlight = {
+    -- `false` will disable the whole extension
+    enable = true,
+  },
+}
