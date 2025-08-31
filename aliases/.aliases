@@ -8,7 +8,7 @@ alias gdc='git diff --cached'
 alias gc='git commit'
 
 # rg
-alias rg='rg -M 256'
+# alias rg='rg -M 256'
 
 # ls
 alias ll='ls -alF'
@@ -27,3 +27,6 @@ alias susp="i3lock -c 000000 ; systemctl suspend"
 alias cc="claude"
 
 alias xr="xrandr --auto"
+
+# NF lat long
+alias rsnf="redshift -l 37.2275:-119.5179"
