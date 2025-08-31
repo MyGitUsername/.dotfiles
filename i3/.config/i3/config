@@ -19,6 +19,30 @@ font pango:MesloLGS NF 12
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
 # font pango:DejaVu Sans Mono 8
 
+# Set theme from .Xresources
+# Load new colors: xrdb ~/.Xresources
+set_from_resource $foreground foreground #c8d3f5
+set_from_resource $background background #222436
+set_from_resource $cursorColor cursorColor #c8d3f5
+set_from_resource $pointerColorBackground  pointerColorBackground #3654a7
+set_from_resource $pointerColorForeground pointerColorForeground #c8d3f5
+set_from_resource $black1 color0
+set_from_resource $black2 color8
+set_from_resource $red1 color1
+set_from_resource $red2 color9
+set_from_resource $green1 color2 
+set_from_resource $green2 color10 
+set_from_resource $yellow1 color3
+set_from_resource $yellow2 color11
+set_from_resource $blue1 color4 
+set_from_resource $blue2 color12 
+set_from_resource $magenta1 color5 
+set_from_resource $magenta2 color13 
+set_from_resource $cyan1 color6 
+set_from_resource $cyan2 color14 
+set_from_resource $white1 color7 
+set_from_resource $white2 color15 
+
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
 
@@ -29,6 +53,9 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
+
+exec --no-startup-id redshift -l $(curl -s "https://location.services.mozilla.com/v1/geolocate?key=geoclue" | awk 'OFS=":" {print $3,$5}' | tr -d ',}')
+exec --no-startup-id ghostty
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -41,13 +68,14 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
+# bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec ghostty
 
 # kill focused window
 bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec --no-startup-id "dmenu_run -nf '#859900' -nb '#002b36' -sb '#859900' -sf '#002b36' -fn 'pango:MesloLGS NF:size=16'" 
+bindsym $mod+d exec --no-startup-id dmenu_run -nf "$foreground" -nb "$background" -sb "$blue1" -sf "$background" -fn 'pango:MesloLGS NF:size=16'
 
 # A more modern dmenu replacement is rofi:
 # bindcode $mod+40 exec "rofi -modi drun,run -show drun"
@@ -178,64 +206,35 @@ bindsym $mod+r mode "resize"
 
 for_window [class="URxvt"] floating enable, resize set width 1200, resize set height 1030, move position 360 20
 
+assign [class="URxvt"] 1
 assign [class="Firefox"] 2
-
-# special
-set_from_resource $foreground foreground #C6C6C6
-set_from_resource $background background #1C1C1C
-set_from_resource $cursorColor cursorColor #C6C6C6
-set_from_resource $pointerColorBackground  pointerColorBackground
-set_from_resource $pointerColorForeground pointerColorForeground
-
-# black
-set_from_resource $black1 color0
-set_from_resource $black2 color8
-
-set_from_resource $red1 color1
-set_from_resource $red2 color9
-
-set_from_resource $green1 color2 
-set_from_resource $green2 color10 
-
-set_from_resource $yellow1 color3
-set_from_resource $yellow2 color11
-
-set_from_resource $blue1 color4 
-set_from_resource $blue2 color12 
-
-set_from_resource $magenta1 color5 
-set_from_resource $magenta2 color13 
-
-set_from_resource $cyan1 color6 
-set_from_resource $cyan2 color14 
-
-set_from_resource $white1 color7 
-set_from_resource $white2 color15 
+assign [class="Brave-browser"] 2
+assign [class="MuPDF"] 3
+assign [class="Beeper"] 5
+assign [title="^Microsoft Teams"] 6
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-  status_command i3status
-	colors {
-		background $background
-		statusline $foreground
-		separator  $pointerColorBackground
-
-		#                  border background text
-		focused_workspace  $cursorColor $cursorColor $black1
-		active_workspace   $cursorColor $cursorColor $black1
-		inactive_workspace $background $background $foreground
-		urgent_workspace   $red2 $background $foreground
-	}
-	separator_symbol " | "
+    status_command i3status
+    colors {
+        background $background
+        statusline $foreground
+        separator  $white1
+        #                  border background text
+        focused_workspace  $blue1 $blue1 $background
+        active_workspace   $blue2 $blue2 $background
+        inactive_workspace $background $background $white1
+        urgent_workspace   $red1 $red1 $background
+    }
+    separator_symbol " | "
 }
 
-
-#                  	border  backgr. text   indicator child_border
-client.focused          #002b36 #586e75 #fdf6e3 #268bd2
-client.focused_inactive #002b36 #073642 #839496 #073642
-client.unfocused        #002b36 #073642 #839496 #073642
-client.urgent           #002b36 #dc322f #fdf6e3 #002b36
+#                       border    backgr.   text        indicator   child_border
+client.focused          $blue1    $blue1    $background $magenta1   $blue1
+client.focused_inactive $black2   $black2   $white1     $black2     $black2
+client.unfocused        $black1   $black1   $white1     $black1     $black1
+client.urgent           $red1     $red1     $background $red2       $red1
 
 bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +10
 bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 10-
