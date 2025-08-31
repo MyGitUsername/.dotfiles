@@ -1,0 +1,42 @@
+! Tokyo Night Moon theme for .Xresources
+! Based on the Tokyo Night Moon color palette
+
+! Special colors
+*.foreground: #c8d3f5
+*.background: #222436
+*.cursorColor: #c8d3f5
+*.pointerColorBackground: #3654a7
+*.pointerColorForeground: #c8d3f5
+
+! Tokyo Night Moon 16-color palette
+! Black
+*.color0: #1e2030
+*.color8: #2d3f76
+
+! Red
+*.color1: #ff757f
+*.color9: #ff8a95
+
+! Green
+*.color2: #c3e88d
+*.color10: #d1f2a5
+
+! Yellow
+*.color3: #ffc777
+*.color11: #ffd98a
+
+! Blue
+*.color4: #82aaff
+*.color12: #91b9ff
+
+! Magenta/Purple
+*.color5: #c099ff
+*.color13: #d0b9ff
+
+! Cyan
+*.color6: #86e1fc
+*.color14: #9fecff
+
+! White
+*.color7: #828bb8
+*.color15: #c8d3f5
