@@ -1,2 +1,2 @@
-#include ".Xresources.d/solarized-dark"
+#include ".Xresources.d/tokyonight_moon"
 #include ".Xresources.d/rxvt-unicode"
