@@ -28,5 +28,7 @@ alias cc="claude"
 
 alias xr="xrandr --auto"
 
+alias ff="fastfetch"
+
 # NF lat long
 alias rsnf="redshift -l 37.2275:-119.5179"
