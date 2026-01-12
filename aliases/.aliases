@@ -13,6 +13,7 @@ alias gc='git commit'
 # ls
 alias ll='ls -alF'
 alias la='ls -aF'
+alias ls='ls --color'
 
 alias swpcaps='setxkbmap -option caps:swapescape'
 
