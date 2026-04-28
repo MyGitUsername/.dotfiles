@@ -86,6 +86,7 @@ vim.api.nvim_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<C
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+  local bufopts = { buffer = bufnr }
 
   --Enable completion triggered by <c-x><c-o>
   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
@@ -100,13 +101,12 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
   vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
   vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
-
 end
 
 -- Typescript: tsserver
 -- Ruby: solargraph, sorbet
 
-local servers = { "solargraph", "elixirls" }
+local servers = { "solargraph" }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
@@ -129,25 +129,19 @@ nvim_lsp.solargraph.setup {
     }
   }
 }
--- https://www.mitchellhanberg.com/how-to-set-up-neovim-for-elixir-development/
- -- /home/michael/.local/share/nvim/lsp_servers/elixir/elixir-ls/language_server.sh" },
-nvim_lsp.elixirls.setup {
-  cmd = { "/home/michael/.local/share/nvim/mason/bin/elixir-ls" },
-  capabilities = capabilities,
-  on_attach = on_attach,
-  settings = {
-    elixirLS = {
-      -- I choose to disable dialyzer for personal reasons, but
-      -- I would suggest you also disable it unless you are well
-      -- aquainted with dialzyer and know how to use it.
-      dialyzerEnabled = false,
-      -- I also choose to turn off the auto dep fetching feature.
-      -- It often get's into a weird state that requires deleting
-      -- the .elixir_ls directory and restarting your editor.
-      fetchDeps = false
-    }
-  }
-}
+
+-- Disable elixirls
+require('lspconfig').elixirls.setup({
+  autostart = false
+})
+
+vim.lsp.config('expert', {
+  cmd = { 'expert', '--stdio' },
+  root_markers = { 'mix.exs', '.git' },
+  filetypes = { 'elixir', 'eelixir', 'heex' },
+})
+
+vim.lsp.enable 'expert'
 --[[
 nvim_lsp.tsserver.setup {
     cmd = { "/home/michael/.local/share/nvim/lsp_servers/tsserver/node_modules/.bin/typescript-language-server" };
