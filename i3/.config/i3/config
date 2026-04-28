@@ -55,7 +55,7 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec --no-startup-id nm-applet
 
 exec --no-startup-id redshift -l $(curl -s "https://location.services.mozilla.com/v1/geolocate?key=geoclue" | awk 'OFS=":" {print $3,$5}' | tr -d ',}')
-exec --no-startup-id ghostty
+exec --no-startup-id urxvt
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -69,7 +69,7 @@ floating_modifier $mod
 
 # start a terminal
 # bindsym $mod+Return exec i3-sensible-terminal
-bindsym $mod+Return exec ghostty
+bindsym $mod+Return exec urxvt
 
 # bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+b exec brave-browser
