@@ -23,6 +23,8 @@ vim.keymap.set('i', ';;', '<Esc>', { desc = 'Exit insert mode with ;;' })
 vim.opt.incsearch = true          -- search as characters are entered
 vim.opt.hlsearch = true
 
+vim.opt.fixendofline = false -- try not to mess up DR files
+
 -- turn off search highlight with <leader><space>
 vim.keymap.set('n', '<leader><space>', ':nohlsearch<CR>', { desc = 'Clear search highlight' })
 
