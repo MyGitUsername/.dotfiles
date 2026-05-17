@@ -10,9 +10,11 @@ fpath=(
 
 path=(
   # ~/.rbenv/bin
+  ~/.cargo/bin
   ~/.local/share/gem/ruby/3.1.0/bin/solargraph
   ${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH
   ~/Apps/elixir-otp-27/bin
+  ~/.local/bin
   $path
 )
 
