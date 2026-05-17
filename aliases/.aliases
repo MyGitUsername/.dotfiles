@@ -1,3 +1,6 @@
+# find files that are gitignored
+alias fdi='fd --no-ignore-vcs'
+
 # safe bash
 mkdir='mkdir -p'
 
