@@ -1,0 +1,53 @@
+Tokyo Night Tmux Theme - Interesting Options
+=============================================
+
+Theme Variations
+----------------
+@theme_variation          night, storm, moon    (default: night)
+
+Separators (powerline-style arrows)
+-----------------------------------
+@theme_left_separator                 (default: )
+@theme_right_separator                (default: )
+@theme_transparent_left_separator_inverse    (for transparent mode)
+@theme_transparent_right_separator_inverse   (for transparent mode)
+
+Use '' for flat/clean look without arrows.
+
+Pane Borders
+------------
+@theme_active_pane_border_style       (default: #737aa2)
+@theme_inactive_pane_border_style     (default: #292e42)
+
+Transparency
+------------
+@theme_transparent_status_bar         true/false (default: false)
+
+Status Bar Plugins
+------------------
+@theme_plugins              datetime, weather, playerctl, battery, homebrew, yay
+@theme_disable_plugins      1 or 0 (default: 0)
+
+Icon Customization
+------------------
+@theme_session_icon                   (default: nerdfont keyboard)
+@theme_plugin_active_window_icon      (default: nerdfont window)
+@theme_plugin_inactive_window_icon    (default: nerdfont window)
+@theme_plugin_zoomed_window_icon      (default: nerdfont zoom)
+
+Battery Plugin (if enabled)
+---------------------------
+@theme_plugin_battery_charging_icon
+@theme_plugin_battery_discharging
+@theme_plugin_battery_red_threshold        (default: 10)
+@theme_plugin_battery_yellow_threshold     (default: 30)
+
+Datetime Plugin (if enabled)
+----------------------------
+@theme_plugin_datetime_icon
+@theme_plugin_datetime_format
+
+Weather Plugin (if enabled)
+---------------------------
+@theme_plugin_weather_location        "City, Country"
+@theme_plugin_weather_format          %t, %c, %h, %w (temp, condition, humidity, wind)
