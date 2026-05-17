@@ -56,6 +56,7 @@ exec --no-startup-id nm-applet
 
 exec --no-startup-id redshift -l $(curl -s "https://location.services.mozilla.com/v1/geolocate?key=geoclue" | awk 'OFS=":" {print $3,$5}' | tr -d ',}')
 exec --no-startup-id urxvt
+exec --no-startup-id /home/michael/Apps/Handy_0.7.1_amd64.AppImage
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
