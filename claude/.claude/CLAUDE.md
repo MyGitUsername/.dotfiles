@@ -1,5 +1,8 @@
 # CLAUDE.md
 
+## Replies
+Write for a junior software engineer. Plain language, short sentences, spell out jargon and acronyms on first use. Explain the "why" behind a conclusion, not just the conclusion. Prefer a small concrete example over an abstract description.
+
 ## TDD
 Red/green. The red is mandatory — run the test, watch it fail, then write code to turn it green. A test that has never failed is not a test.
 
@@ -15,12 +18,14 @@ A bug fix doesn't get a refactor. A one-line change doesn't grow a helper. Notic
 
 Root cause over symptom. Don't catch what you don't understand or guard a value that shouldn't be missing — find why.
 
+Avoid belt-and-suspenders: guard an invariant once, at the layer that owns it. Redundant checks — double validation, a try/catch around code that can't throw — hide which one actually holds the line.
+
 ## Documentation
-Self-documenting code over prose. Precise names, telling type signatures, small focused modules — helper signatures encode conventions so callers learn from the type.
+The code is the documentation, and it's written for the next developer, not the user — names, type signatures, and module boundaries carry "why it's this way," not "what the product does." Precise names and telling signatures encode conventions so callers learn from the type.
 
-READMEs, if unavoidable, cover "how to run, where things live." No philosophy or patterns sections.
+Fewer comments. A comment is a last resort for when the code can't say it itself, and then it says why — never what the line already shows. Delete comments that restate the code.
 
-When explanation is needed, prefer brief inline comments over expanding README/docs.
+Less README. If unavoidable, cover only "how to run, where things live" — no philosophy or patterns sections. Reach for a sharper name before a paragraph.
 
 ## Commits
 Imperative mood ("Add", "Fix", "Update"). Objective and concise. Never self-reference ("I", "me", "Claude", "by Claude").
