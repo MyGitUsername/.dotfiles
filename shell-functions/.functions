@@ -60,3 +60,56 @@
   dpsf() {
     docker ps --format "table {{.Names}}\t{{.Status}}\t{{.State}}"
   }
+
+# Claude Code: pin a stable session id on new interactive sessions so that
+# tmux-resurrect relaunches the *exact* session after a restart -- even when
+# several sessions share one directory. Pairs with the tmux option
+# `@resurrect-processes '"~claude"'`, which restores the saved argv verbatim.
+  claude() {
+    emulate -L zsh
+    local -a args; args=("$@")
+    local i sid=""
+
+    # Restore path: resurrect relaunches a saved pane as `claude --session-id X`.
+    # Reusing --session-id errors ("already in use"), so if session X exists on
+    # disk, rewrite the launch to `--resume X` to continue that conversation.
+    for (( i = 1; i <= ${#args}; i++ )); do
+      case "${args[i]}" in
+        --session-id)   sid="${args[i+1]}"; break ;;
+        --session-id=*) sid="${args[i]#--session-id=}"; break ;;
+      esac
+    done
+    if [[ -n "$sid" ]]; then
+      local -a found; found=( "$HOME"/.claude/projects/*/"$sid".jsonl(N) )
+      if (( ${#found} )); then
+        local -a out; local skip=0
+        for (( i = 1; i <= ${#args}; i++ )); do
+          if (( skip )); then skip=0; continue; fi
+          case "${args[i]}" in
+            --session-id)   out+=(--resume "$sid"); skip=1 ;;
+            --session-id=*) out+=(--resume "$sid") ;;
+            *)              out+=("${args[i]}") ;;
+          esac
+        done
+        command claude "${out[@]}"; return
+      fi
+    fi
+
+    # Don't pin for headless/session-selecting/help/version flags or subcommands.
+    for (( i = 1; i <= ${#args}; i++ )); do
+      case "${args[i]}" in
+        -p|--print|-r|--resume|-c|--continue|--session-id|--session-id=*|--fork-session|--from-pr|-h|--help|-v|--version)
+          command claude "${args[@]}"; return ;;
+      esac
+      if [[ "${args[i]}" != -* ]]; then
+        case "${args[i]}" in
+          agents|auth|auto-mode|config|doctor|install|mcp|plugin|plugins|project|setup-token|ultrareview|update|upgrade|migrate-installer)
+            command claude "${args[@]}"; return ;;
+        esac
+        break
+      fi
+    done
+
+    # Fresh interactive session: pin a new id so it can be resumed after a restart.
+    command claude --session-id "$(< /proc/sys/kernel/random/uuid)" "${args[@]}"
+  }
