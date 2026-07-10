@@ -54,7 +54,9 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
 
-exec --no-startup-id redshift -l $(curl -s "https://location.services.mozilla.com/v1/geolocate?key=geoclue" | awk 'OFS=":" {print $3,$5}' | tr -d ',}')
+# redshift auto-starts at an IP-derived location (redshift's own geoclue2 support
+# is broken with geoclue 2.7); see ~/.local/bin/redshift-auto.
+exec --no-startup-id /home/michael/.local/bin/redshift-auto
 exec --no-startup-id urxvt
 exec --no-startup-id /home/michael/Apps/Handy_0.7.1_amd64.AppImage
 

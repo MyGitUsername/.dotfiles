@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# Start redshift at an approximate location derived from IP geolocation.
+#
+# Why this exists: redshift 1.12's built-in `-l geoclue2` provider is
+# incompatible with geoclue 2.7 (it calls the removed GetClient method), and
+# geoclue's D-Bus method calls hang on this machine anyway. So we resolve the
+# location ourselves. IP-only by design: no WiFi access points are ever sent.
+set -euo pipefail
+
+cache="${XDG_CACHE_HOME:-$HOME/.cache}/redshift-location"
+fallback="37.34:-121.89"   # used only if the network AND cache both fail
+
+# Query beaconDB (free, no API key) by IP. considerIp:true, no WiFi APs.
+fetch_coords() {
+	curl -fsS -m 8 https://api.beacondb.net/v1/geolocate \
+		-H 'Content-Type: application/json' -d '{"considerIp":true}' \
+		| jq -e -r '.location | "\(.lat):\(.lng)"'
+}
+
+# The network may not be up yet right after login; retry briefly.
+coords=""
+for _ in 1 2 3 4; do
+	if coords=$(fetch_coords 2>/dev/null); then
+		printf '%s\n' "$coords" >"$cache"
+		break
+	fi
+	coords=""
+	sleep 2
+done
+
+# Fall back to the last known location, then the hardcoded default.
+[[ -n "$coords" ]] || coords=$(cat "$cache" 2>/dev/null || printf '%s' "$fallback")
+
+exec redshift -l "$coords"
